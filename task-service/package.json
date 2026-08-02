@@ -1,0 +1,23 @@
+{
+  "name": "task-service",
+  "version": "1.0.0",
+  "description": "task-manager",
+  "keywords": [
+    "tasks"
+  ],
+  "license": "ISC",
+  "author": "silvsane",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
