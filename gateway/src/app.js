@@ -4,7 +4,17 @@ const cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = (
+  process.env.ALLOWED_ORIGINS || "http://localhost:8080"
+).split(",");
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
 app.get("/health", (req, res) => {
   res.json({
