@@ -1,0 +1,21 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "static-frontend",
+  "keywords": [
+    "static",
+    "front",
+    "frontend"
+  ],
+  "license": "ISC",
+  "author": "silvsane",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "demo": "node server.js",
+    "dev": "cross-env IS_TEST=true node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
