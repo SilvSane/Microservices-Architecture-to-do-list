@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const reqAuth = require("./src/middlewares/auth.middleware");
 const express = require("express");
 const taskRoutes = require("./src/routes/task.routes");
 
@@ -10,7 +11,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", service: "task-service" });
 });
 
-app.use("/tasks", taskRoutes);
+app.use("/tasks", reqAuth, taskRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

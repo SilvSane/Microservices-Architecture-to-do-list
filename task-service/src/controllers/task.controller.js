@@ -1,8 +1,7 @@
 const tasksService = require("../services/task.service");
 
 function getUserId(req) {
-  //const userId = req.user.id; // JWT middleware
-  const userId = req.header("x-user-id") || 1; //test
+  const userId = req.userId;
   return Number(userId);
 }
 
