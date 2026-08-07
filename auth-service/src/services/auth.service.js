@@ -2,6 +2,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userStore = require("../store/users.store");
 
+function signToken(user) {
+  return jwt.sign({ sub: user.id, email: user.email }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+}
+
 async function register({ email, password, name }) {
   if (userStore.findByEmail(email)) {
     const err = new Error("User with such email already exists!");
@@ -12,7 +18,8 @@ async function register({ email, password, name }) {
 
   const passwordHash = await bcrypt.hash(password, 10);
   const user = userStore.create({ email, passwordHash, name }); //add to DB (create method)
-  return { id: user.id, email: user.email, name: user.name }; // return to client
+  const token = signToken(user);
+  return { user: { id: user.id, email: user.email, name: user.name }, token }; // return to client
 }
 
 async function login({ email, password }) {
@@ -34,12 +41,7 @@ async function login({ email, password }) {
     throw err;
   }
 
-  const token = jwt.sign(
-    { sub: user.id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" },
-  );
-
+  const token = signToken(user);
   return { token };
 }
 
