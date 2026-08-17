@@ -1,4 +1,4 @@
-require("dotenv").config();
+const cfg = require("../src/config/config");
 
 const express = require("express");
 const authRoutes = require("./routes/auth.routes");
@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT;
+const PORT = cfg.port;
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}/`);
 });

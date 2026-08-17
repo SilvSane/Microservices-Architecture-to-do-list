@@ -1,4 +1,5 @@
 const authService = require("../services/auth.service");
+const cfg = require("../config/config");
 
 const register = async (req, res, next) => {
   try {
@@ -12,9 +13,15 @@ const register = async (req, res, next) => {
       });
     }
 
-    const result = await authService.register({ name, email, password });
-    //result = {user: {}, accessToken, refreshToken}
-    res.status(201).json(result);
+    const { user, refreshToken, accessToken } = await authService.register({
+      name,
+      email,
+      password,
+    });
+
+    res.cookie("refreshToken", refreshToken, cfg.refCookie);
+
+    res.status(201).json({ user, accessToken });
   } catch (err) {
     next(err);
   }
@@ -32,8 +39,14 @@ const login = async (req, res, next) => {
       });
     }
 
-    const profile = await authService.login({ email, password });
-    res.json(profile);
+    const { accessToken, refreshToken } = await authService.login({
+      email,
+      password,
+    });
+
+    res.cookie("refreshToken", refreshToken, cfg.refCookie);
+
+    res.json({ accessToken });
   } catch (err) {
     next(err);
   }
@@ -59,9 +72,9 @@ function refresh(req, res, next) {
 function logout(req, res, next) {
   try {
     const { refreshToken } = req.cookies;
-    authService.logout(refreshToken);
+    if (refreshToken) authService.logout(refreshToken);
 
-    res.clearCookie("refreshToken");
+    res.clearCookie("refreshToken", cfg.refCookie);
     res.status(204).send();
   } catch (err) {
     next(err);

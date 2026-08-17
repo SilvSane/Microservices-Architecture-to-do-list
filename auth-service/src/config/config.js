@@ -3,7 +3,7 @@ require("dotenv").config();
 const NODE_ENV = process.env.NODE_ENV;
 const isProd = NODE_ENV === "production";
 
-//like zod, envalid:
+//smth like zod, envalid:
 function required(varName) {
   const value = process.env[varName];
   if (!value) {
@@ -18,6 +18,10 @@ function required(varName) {
 const refreshExpires = { ms: 7 * 24 * 60 * 60 * 1000, str: "7d" };
 
 module.exports = {
+  env: NODE_ENV,
+  isProd,
+  port: Number(process.env.PORT) || 3001,
+
   jwt: {
     accessSecret: required("ACCESS_JWT_SECRET") || "access-jwt-secret-fb",
     refreshSecret: required("REFRESH_JWT_SECRET") || "refresh-jwt-secret-fb",

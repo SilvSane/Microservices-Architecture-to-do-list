@@ -1,3 +1,5 @@
+const cfg = require("../config/config");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userStore = require("../store/users.store");
@@ -12,15 +14,13 @@ function hashToken(token) {
 function issueTokenPair(user) {
   const accessToken = jwt.sign(
     { sub: user.id, email: user.email },
-    process.env.ACCESS_JWT_SECRET,
-    { expiresIn: "15m" },
+    cfg.jwt.accessSecret,
+    { expiresIn: cfg.jwt.accessExpiresIn },
   );
-  const refreshToken = jwt.sign(
-    { sub: user.id },
-    process.env.REFRESH_JWT_SECRET,
-    { expiresIn: "7d" },
-  );
-  const expireTimeMs = Date.now() + 7 * 24 * 60 * 60 * 1000;
+  const refreshToken = jwt.sign({ sub: user.id }, cfg.jwt.refreshSecret, {
+    expiresIn: cfg.jwt.refreshExpiresIn,
+  });
+  const expireTimeMs = Date.now() + cfg.jwt.expireTimeMs;
 
   refTokenStore.add({
     tokenHash: hashToken(refreshToken),
@@ -74,7 +74,7 @@ async function login({ email, password }) {
 function refAccessToken(currentRefToken) {
   let payload;
   try {
-    payload = jwt.verify(currentRefToken, process.env.REFRESH_JWT_SECRET);
+    payload = jwt.verify(currentRefToken, cfg.jwt.refreshSecret);
   } catch {
     const err = new Error("Invalid refresh token!");
     err.status = 401;
