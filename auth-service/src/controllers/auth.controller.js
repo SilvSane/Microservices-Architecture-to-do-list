@@ -1,6 +1,7 @@
 const authService = require("../services/auth.service");
+const cfg = require("../config/config");
 
-register = async (req, res, next) => {
+const register = async (req, res, next) => {
   try {
     const { email, password, name } = req.body;
     if (!email || !password || !name) {
@@ -12,15 +13,21 @@ register = async (req, res, next) => {
       });
     }
 
-    const user = await authService.register({ name, email, password });
+    const { user, refreshToken, accessToken } = await authService.register({
+      name,
+      email,
+      password,
+    });
 
-    res.status(201).json(user);
+    res.cookie("refreshToken", refreshToken, cfg.refCookie);
+
+    res.status(201).json({ user, accessToken });
   } catch (err) {
     next(err);
   }
 };
 
-login = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -32,11 +39,46 @@ login = async (req, res, next) => {
       });
     }
 
-    const profile = await authService.login({ email, password });
-    res.json(profile);
+    const { accessToken, refreshToken } = await authService.login({
+      email,
+      password,
+    });
+
+    res.cookie("refreshToken", refreshToken, cfg.refCookie);
+
+    res.json({ accessToken });
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { register, login };
+function refresh(req, res, next) {
+  try {
+    const { refreshToken } = req.cookies;
+    const tokenPair = authService.refAccessToken(refreshToken);
+
+    res.cookie("refreshToken", tokenPair.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    res.json({ accessToken: tokenPair.accessToken });
+  } catch (err) {
+    next(err);
+  }
+}
+
+function logout(req, res, next) {
+  try {
+    const { refreshToken } = req.cookies;
+    if (refreshToken) authService.logout(refreshToken);
+
+    res.clearCookie("refreshToken", cfg.refCookie);
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { register, login, refresh, logout };
