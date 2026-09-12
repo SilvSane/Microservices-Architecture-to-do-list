@@ -1,0 +1,5 @@
+packages:
+  - "auth-service"
+  - "task-service"
+  - "gateway"
+  - "frontend"
