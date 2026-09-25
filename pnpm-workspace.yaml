@@ -3,3 +3,6 @@ packages:
   - "task-service"
   - "gateway"
   - "frontend"
+  - "ts-task-service"
+allowBuilds:
+  esbuild: true
