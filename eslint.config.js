@@ -28,4 +28,21 @@ export default [
   eslintConfigPrettier,
 
   { ignores: ['**/dist/**', '**/node_modules/**'] },
+
+  {
+    files: ['frontend/**/*.{ts,tsx,js,jsx}'],
+    // React settings later
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+
+      globals: {
+        ...globals.browser,
+      },
+    },
+    rules: {
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
 ];
