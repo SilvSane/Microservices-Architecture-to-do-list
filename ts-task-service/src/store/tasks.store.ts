@@ -1,4 +1,4 @@
-import { Task, UpdateTaskInput } from '../types/task';
+import { Task, UpdateTaskInput } from '../schemas/task.schema';
 
 const tasks: Task[] = [];
 let nextId = 1;

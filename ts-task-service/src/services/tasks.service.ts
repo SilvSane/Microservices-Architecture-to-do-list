@@ -1,6 +1,6 @@
 import * as tasksStore from '../store/tasks.store';
 import { AppError } from '../errors/app-error';
-import { Task, UpdateTaskInput } from '../types/task';
+import { Task, UpdateTaskInput } from '../schemas/task.schema';
 import { assertExists } from '../utils/assert';
 
 export function listTasks(userId: number): Task[] {

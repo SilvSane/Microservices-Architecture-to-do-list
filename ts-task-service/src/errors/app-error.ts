@@ -17,6 +17,7 @@ export type AppErrorCode =
   | 'UNAUTHORIZED'
   | 'FORBIDDEN'
   | 'INTERNAL_SERVER_ERROR'
+  | 'INVALID_TOKEN'
   | 'KAFKA_COMMUNICATION_ERROR'
   | (string & {});
 
