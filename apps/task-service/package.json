@@ -1,5 +1,5 @@
 {
-  "name": "ts-task-service",
+  "name": "task-service",
   "version": "1.0.0",
   "description": "ts-task-manager",
   "main": "dist/app.js",
