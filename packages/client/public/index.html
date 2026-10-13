@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do · Microservices</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- drawer overlay & drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+    <div class="drawer-profile">
+      <div class="drawer-avatar" id="drawerAvatar">?</div>
+      <div class="drawer-name" id="drawerName">Пользователь</div>
+      <div class="drawer-email" id="drawerEmail">user@email.com</div>
+    </div>
+    <hr class="drawer-divider">
+    <button class="drawer-logout" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> Выйти
+    </button>
+  </div>
+
+  <!-- main card -->
+  <div class="app-card" id="appContainer">
+
+    <!-- auth -->
+    <div id="authContainer" class="auth-container">
+      <h2 id="authTitle">Вход в систему</h2>
+      <div class="form-group" id="nameGroup" style="display: none;">
+        <label for="regName">Имя</label>
+        <input id="regName" type="text" placeholder="Ваше имя">
+      </div>
+      <div class="form-group">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" placeholder="example@test.com">
+      </div>
+      <div class="form-group">
+        <label for="authPassword">Пароль</label>
+        <input id="authPassword" type="password" placeholder="******">
+        <div id="authError" class="error-message"></div>
+      </div>
+      <button class="btn-primary" id="authButton" onclick="handleAuthSubmit()">Войти</button>
+      <div class="auth-toggle" id="authToggle">
+        Нет аккаунта? <a onclick="toggleAuthMode(true)">Зарегистрироваться</a>
+      </div>
+    </div>
+
+    <!-- app (tasks) -->
+    <div id="appContent" style="display: none;">
+      <div class="header">
+        <h1><i class="fas fa-list-check" style="margin-right: 10px; background: linear-gradient(135deg, #7c4dff, #448aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>Мои задачи</h1>
+        <div class="user-avatar" id="userAvatar" onclick="openDrawer()">?</div>
+      </div>
+
+      <div class="add-task-form">
+        <div class="add-task-row">
+          <input id="taskTitleInput" placeholder="Меня ждёт новая задача!" />
+          <button onclick="addTask()"><i class="fas fa-plus"></i> Добавить</button>
+        </div>
+        <div id="taskError" class="error-message">Пожалуйста, введите задачу!</div>
+      </div>
+
+      <ul class="task-list" id="taskList"></ul>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
