@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { taskRouter } from './routes/task.routes';
-import { errorHandler } from './middlewares/errorHandler';
+import { errorHandler } from '@todo/shared';
 import { PORT } from './config/config';
 
 const app = express();

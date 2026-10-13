@@ -1,5 +1,5 @@
 import { configDotenv } from 'dotenv';
-import { assertExists } from '../utils/assert';
+import { assertExists } from '@todo/shared';
 
 configDotenv();
 

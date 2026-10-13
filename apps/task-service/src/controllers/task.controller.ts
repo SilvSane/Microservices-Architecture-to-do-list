@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as tasksService from '../services/tasks.service';
-import { assertExists } from '../utils/assert';
+import { assertExists } from '@todo/shared';
 import { createTaskSchema, taskIdSchema, updateTaskSchema } from '../schemas/task.schema';
 
 function getAuthedUserId(req: Request): number {

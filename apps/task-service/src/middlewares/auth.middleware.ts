@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { tokenPayloadSchema } from '../schemas/auth.schema';
-import { AppError } from '../errors/app-error';
+import { AppError } from '@todo/shared';
 import { JWT_SECRET } from '../config/config';
 
 export function requireAuth(req: Request, res: Response, next: NextFunction): void {

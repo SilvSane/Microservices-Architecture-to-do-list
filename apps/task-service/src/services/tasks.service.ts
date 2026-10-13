@@ -1,7 +1,6 @@
 import * as tasksStore from '../store/tasks.store';
-import { AppError } from '../errors/app-error';
+import { AppError, assertExists } from '@todo/shared';
 import { Task, UpdateTaskInput } from '../schemas/task.schema';
-import { assertExists } from '../utils/assert';
 
 export function listTasks(userId: number): Task[] {
   return tasksStore.findAllByUser(userId);
