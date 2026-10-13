@@ -1,8 +1,7 @@
 packages:
-  - "auth-service"
-  - "task-service"
-  - "gateway"
-  - "frontend"
-  - "ts-task-service"
+  - "apps/*"
+  - "packages/*"
+
+
 allowBuilds:
   esbuild: true
