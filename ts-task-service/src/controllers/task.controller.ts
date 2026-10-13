@@ -56,7 +56,7 @@ export function remove(req: Request, res: Response, next: NextFunction): void {
     const userId = getAuthedUserId(req);
     const taskId = taskIdSchema.parse(req.params.id);
     tasksService.deleteTask(userId, taskId);
-    res.json(204);
+    res.status(204).send();
   } catch (err) {
     next(err);
   }
