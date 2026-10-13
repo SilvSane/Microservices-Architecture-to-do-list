@@ -1,8 +1,7 @@
 packages:
-  - "auth-service"
-  - "gateway"
-  - "packages/client"
-  - "apps/task-service"
+  - "apps/*"
+  - "packages/*"
+
 
 allowBuilds:
   esbuild: true
