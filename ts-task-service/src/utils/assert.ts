@@ -1,0 +1,8 @@
+import { AppError } from '../errors/app-error';
+
+export function assertExists<T>(value: T | null | undefined, message: string): T {
+  if (value === null || value === undefined) {
+    throw new AppError(500, 'INTERNAL_SERVER_ERROR', message);
+  }
+  return value;
+}
